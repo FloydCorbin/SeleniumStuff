@@ -43,60 +43,96 @@ const driver = new Builder().forBrowser('chrome').build();
 const caps = new Capabilities();
 caps.setPageLoadStrategy('eager');
 
+// SELECTORS (CSS)
+const selectorDr = {
+    "header1": "#paragraph-23038 > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > h2:nth-child(1)",
+    "paragraph1": "#paragraph-23038 > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > p:nth-child(3)",
+    "header2": "#paragraph-20146 > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > h2:nth-child(1)",
+    "paragraph2": "#paragraph-20146 > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > p:nth-child(3)",
+}
 
-//Drupal Array
-let textArrayD = [];
+const selectorSc = {
+    "header1": "#content > div:nth-child(2) > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > h2:nth-child(1)",
+    "paragraph1": "#content > div:nth-child(2) > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > p:nth-child(3)",
+    "header2": "div.promo:nth-child(5) > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > h2:nth-child(1)",
+    "paragraph2": "div.promo:nth-child(5) > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > p:nth-child(2)",
+}
 
-//Sitecore Array
-let textArrayS = [];
+//TARGET ARRAYS
+let arrayDr = [];
+let arraySc = [];
 
 
 /*DRUPAL*/
-async function mainD(){
+async function mainDr(){
 
     try {
-        await driver.manage().setTimeouts( { implicit: 30000 } );
+        
         await driver.get(drupalBasePages[0]);
         
-        let waitH2 = await driver.wait(until.elementLocated(By.xpath('//*[@id="paragraph-23038"]/div/div/div/div/h2')));
-        let imageLeftH2 = await waitH2.getText();
-        textArrayD.push(`Drupral: ${imageLeftH2}`);
+        let header1 = await (await driver.wait(until.elementLocated(By.css(selectorDr.header1)), 5000)).getText();
+        arrayDr.push(header1);
 
-        let imageLeftP = await (await (await driver).findElement(By.xpath('//*[@id="paragraph-23038"]/div/div/div/div/p[2]'))).getText();
-        textArrayD.push(`Drupal: ${imageLeftP}`);
+        let paragraph1 = await (await driver.wait(until.elementLocated(By.css(selectorDr.paragraph1)), 5000)).getText();
+        arrayDr.push(paragraph1);
 
-        console.log(textArrayD)  
+        (await driver).executeScript('window.scrollTo(0, 1800)');
 
-        await (await driver).quit();
-        return textArrayD;
+        let header2 = await (await driver.wait(until.elementLocated(By.css(selectorDr.header2)), 5000)).getText();
+        arrayDr.push(header2);
+
+        let paragraph2 = await (await driver.wait(until.elementLocated(By.css(selectorDr.paragraph2)), 5000)).getText();
+        arrayDr.push(paragraph2);
+
+        if (arraySc.toString === arrayDr.toString)  {
+            console.log('The arrays match in length')
+            for (let i = 0; i < arraySc.length; i++) {
+                console.log(arrayDr[i]);
+                console.log(arraySc[i]);  
+            };
+        } else {
+            console.log('The text doesn\'t match');
+        }
+        
     } catch (error) {
         console.log(error);
+    } finally{
+        await (await driver).quit();
+
     }
 }
 
 /*SITECORE*/
-// async function mainS(){
+async function mainSc(){
 
-//     try {
-//         await driver.manage().setTimeouts( { implicit: 30000 } );
-//         await driver.get(sitecoreBasePages[0]);
+    try {
         
-//         let waitH2 = await driver.wait(until.elementLocated(By.xpath('//*[@id="content"]/div[2]/div/div[1]/div/div/div[1]/h2')), 10000);
-//         let imageLeftH2 = await waitH2.getText();
-//         textArrayS.push(`Sitecore: ${imageLeftH2}`);
+        await driver.get(sitecoreBasePages[0]);
+        
+        let header1 = await (await driver.wait(until.elementLocated(By.css(selectorSc.header1)), 5000)).getText();
+        arraySc.push(header1);
 
-//         let imageLeftP = await (await (await driver).findElement(By.xpath('//*[@id="content"]/div[2]/div/div[1]/div/div/div[1]/p[2]'))).getText();
-//         textArrayS.push(`Sitecore: ${imageLeftP}`);
+        let paragraph1 = await (await driver.wait(until.elementLocated(By.css(selectorSc.paragraph1)), 5000)).getText();
+        arraySc.push(paragraph1);
 
-//         console.log(textArrayS)  
+        (await driver).executeScript('window.scrollTo(0, 1800)');
 
-//         await (await driver).quit();
-//         return textArrayS;
-//     } catch (error) {
-//         console.log(error);
-//     }
-// }
+        let header2 = await (await driver.wait(until.elementLocated(By.css(selectorSc.header2)), 5000)).getText();
+        arraySc.push(header2);
 
-mainD();
-// mainS();
+        let paragraph2 = await (await driver.wait(until.elementLocated(By.css(selectorSc.paragraph2)), 5000)).getText();
+        arraySc.push(paragraph2);
+
+        console.log(arraySc)  
+        
+    } catch (error) {
+        console.log(error);
+    } finally{
+        mainDr();
+
+
+    }
+}
+
+mainSc();
 

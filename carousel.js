@@ -150,7 +150,6 @@ async function mainDrupal() {
 
 
 //SITECORE
-
 async function mainSitecore() {
     await driver.manage().setTimeouts({
         implicit: 30000

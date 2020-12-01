@@ -48,6 +48,7 @@ const assert = require('assert');
 const { elementIsVisible } = require('selenium-webdriver/lib/until');
 caps.setPageLoadStrategy('normal');
 
+// SELECTORS (CSS)
 const selectorDr = {
     "header": ".mb-45",
     "firstArticle": "div.col-lg-7:nth-child(1) > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > h3:nth-child(3)",
@@ -69,6 +70,8 @@ const selectorSc = {
     "sixthArticle": "div.img-middle-size:nth-child(1) > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > h3:nth-child(3)",
     "seventhArticle": "div.img-middle-size:nth-child(2) > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > h3:nth-child(3)",
 }
+
+// TARGET ARRAYS
 let arraySc = new Array; 
 let arrayDr = new Array; 
 
