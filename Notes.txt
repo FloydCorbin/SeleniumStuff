@@ -1,0 +1,26 @@
+Notes:
+
+Implicit Waits: 
+
+await driver.manage().setTimeouts( { implicit: 10000 } );
+
+Waits for a specified amount of time before throwing a no such element error
+Doesn't depend on a certain element state, just time
+
+Pros
+Easy to implement
+Non-intrusive
+They can be applied to all elements in a script
+Con
+Can take up unnecessary time
+
+Explicit Waits:
+
+await driver.wait(until.elementLocated(By.id('foo')), 30000);
+
+Wait for a specified amount of time for a certain condition to be true
+If the condition is not met in time, an exception is thrown
+
+Pros
+Allows flexibility to wait for an element to be in a specific condition.
+They pull for the condition to be true every 500 ms and Will likely not take up any unnecessary time.

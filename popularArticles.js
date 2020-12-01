@@ -44,6 +44,7 @@ const {
 
 const driver = new Builder().forBrowser('firefox').build();
 const caps = new Capabilities();
+const assert = require('assert');
 caps.setPageLoadStrategy('normal');
 
 async function navigate() {
