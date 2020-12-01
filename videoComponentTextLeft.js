@@ -129,8 +129,6 @@ async function mainSc(){
         console.log(error);
     } finally{
         mainDr();
-
-
     }
 }
 
