@@ -1,5 +1,16 @@
 Notes:
 
+HOME PAGE:
+hero carousel
+video component with text left
+popular articles
+carousel
+feature topics
+explore topics
+
+ABOUT US:
+
+
 Implicit Waits: 
 
 await driver.manage().setTimeouts( { implicit: 10000 } );
