@@ -9,7 +9,8 @@ feature topics
 explore topics
 
 ABOUT US:
-
+tile animation with hover
+newsletter sign up
 
 Implicit Waits: 
 
